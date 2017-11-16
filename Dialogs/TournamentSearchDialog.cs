@@ -33,7 +33,7 @@ namespace TournamaticBot
             }
             catch(Exception e)
             {
-                Debug.WriteLine($"Error when searching for musician: {e.Message}");
+                Debug.WriteLine($"Error when searching for tournaments: {e.Message}");
             }
             context.Done<object>(null);
         }

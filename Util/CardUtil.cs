@@ -8,11 +8,11 @@ namespace TournamaticBot.Util
     {
         public static async void ShowHeroCard(IMessageActivity message, IList<Tournament> searchResult)
         {
-            //Make reply activity and set layout
+            // Make reply activity and set layout
             Activity reply = ((Activity)message).CreateReply();
             reply.AttachmentLayout = AttachmentLayoutTypes.Carousel;
 
-            //Make each Card for each musician
+            // Make each Card for each tournament
             foreach (var tournament in searchResult)
             {
                 List<CardImage> cardImages = new List<CardImage>();
@@ -29,7 +29,6 @@ namespace TournamaticBot.Util
             }
 
             // Make connector and reply message
-
             ConnectorClient connector = new ConnectorClient(new Uri(reply.ServiceUrl));
             await connector.Conversations.SendToConversationAsync(reply);
         }

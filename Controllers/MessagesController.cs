@@ -13,6 +13,8 @@ namespace TournamaticBot
     [BotAuthentication]
     public class MessagesController : ApiController
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// POST: api/Messages
         /// receive a message from a user and send replies
@@ -21,16 +23,24 @@ namespace TournamaticBot
         [ResponseType(typeof(void))]
         public virtual async Task<HttpResponseMessage> Post([FromBody] Activity activity)
         {
-            // check if activity is of type message
-            if (activity.GetActivityType() == ActivityTypes.Message)
+            try
             {
-                await Conversation.SendAsync(activity, () => new CarouselCardsDialog());
+                // check if activity is of type message
+                if (activity.GetActivityType() == ActivityTypes.Message)
+                {
+                    await Conversation.SendAsync(activity, () => new CarouselCardsDialog());
+                }
+                else
+                {
+                    HandleSystemMessage(activity);
+                }
+                return new HttpResponseMessage(System.Net.HttpStatusCode.Accepted);
             }
-            else
+            catch (Exception e)
             {
-                HandleSystemMessage(activity);
+                log.ErrorFormat(e.Message);
             }
-            return new HttpResponseMessage(System.Net.HttpStatusCode.Accepted);
+            return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
         }
 
         private Activity HandleSystemMessage(Activity message)
