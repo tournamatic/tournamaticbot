@@ -9,14 +9,14 @@ namespace TournamaticBot
 
         protected void Application_Start()
         {
-            var log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        
             try
             {
                 GlobalConfiguration.Configure(WebApiConfig.Register);
             }
             catch (Exception e)
             {
+                var log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
                 var sb = new StringBuilder();
                 var inExp = e;
                 do

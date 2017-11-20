@@ -13,8 +13,6 @@ namespace TournamaticBot
     [BotAuthentication]
     public class MessagesController : ApiController
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
         /// <summary>
         /// POST: api/Messages
         /// receive a message from a user and send replies
@@ -38,6 +36,7 @@ namespace TournamaticBot
             }
             catch (Exception e)
             {
+                var log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
                 log.ErrorFormat(e.Message);
             }
             return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
